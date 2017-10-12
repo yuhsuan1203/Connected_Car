@@ -17,16 +17,31 @@
             android:layout_height="300dp"
             android:id="@+id/imageToUpload" />
 
-        <EditText
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/etUploadName" />
+            android:orientation="horizontal">
 
-        <Button
+            <Button
+                android:id="@+id/bSelectImage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Select" />
+
+            <Button
+                android:id="@+id/bUploadImage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Analyze" />
+        </LinearLayout>
+
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/bUploadImage"
-            android:text="Analyze" />
+            android:text="Result"
+        />
 
     </LinearLayout>
 
