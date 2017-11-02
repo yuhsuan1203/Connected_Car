@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
             progressDialog.setTitle("Uploading...")
             progressDialog.show()
 
-            val imageRef = storageReference!!.child("images/" + UUID.randomUUID().toString())
+            val imageRef = storageReference!!.child("images/" + UUID.randomUUID().toString() + ".jpg")
             imageRef.putFile(filePath!!)
                     .addOnSuccessListener {
                         progressDialog.dismiss()
