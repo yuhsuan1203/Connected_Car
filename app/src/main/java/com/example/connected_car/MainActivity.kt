@@ -57,13 +57,12 @@ class MainActivity : AppCompatActivity() {
             uploadName = UUID.randomUUID().toString()
 
             val database = FirebaseDatabase.getInstance()
-            val myRef = database.getReference("CarNumberPlate")
-
-            myRef.setValue(uploadName)
+            val myRef = database.getReference("car-number-plate")
 
             val imageRef = storageReference!!.child("images/" + uploadName + ".jpg")
             imageRef.putFile(filePath!!)
                     .addOnSuccessListener {
+                        myRef.child(uploadName).setValue(uploadName)
                         progressDialog.dismiss()
                         Toast.makeText(applicationContext, "Image Uploaded", Toast.LENGTH_SHORT).show()
                     }
