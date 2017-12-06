@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity() {
             uploadName = UUID.randomUUID().toString()
 
             val database = FirebaseDatabase.getInstance()
-            val myRef = database.getReference("car-number-plate")
+            val myRef = database.getReference()
 
             val imageRef = storageReference!!.child("images/" + uploadName + ".jpg")
             imageRef.putFile(filePath!!)
