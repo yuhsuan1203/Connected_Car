@@ -13,6 +13,8 @@ import android.widget.ImageView
 import android.widget.Toast
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.DatabaseReference
 import java.io.*
 import java.util.*
 
@@ -51,7 +53,15 @@ class MainActivity : AppCompatActivity() {
             progressDialog.setTitle("Uploading...")
             progressDialog.show()
 
-            val imageRef = storageReference!!.child("images/" + UUID.randomUUID().toString() + ".jpg")
+            var uploadName : String
+            uploadName = UUID.randomUUID().toString()
+
+            val database = FirebaseDatabase.getInstance()
+            val myRef = database.getReference("CarNumberPlate")
+
+            myRef.setValue(uploadName)
+
+            val imageRef = storageReference!!.child("images/" + uploadName + ".jpg")
             imageRef.putFile(filePath!!)
                     .addOnSuccessListener {
                         progressDialog.dismiss()
