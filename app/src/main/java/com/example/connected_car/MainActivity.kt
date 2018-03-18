@@ -1,7 +1,9 @@
 package com.example.connected_car
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.app.ProgressDialog
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
@@ -17,10 +19,13 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.DatabaseReference
 import java.io.*
 import java.util.*
+import android.provider.MediaStore.Images
+
+
 
 class MainActivity : AppCompatActivity() {
     private val SELECT_FILE = 1
-    private val REQUEST_CAMERA = 0
+    private val REQUEST_CAMERA = 2
     internal lateinit var userChoosenTask: String
     internal lateinit var imageSelected: ImageView
     private var filePath: Uri? = null
@@ -115,8 +120,8 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (resultCode == RESULT_OK && data != null && data.data != null) {
-            filePath = data.data
+        if (resultCode == RESULT_OK && data != null) {
+            filePath = data?.data
             if (requestCode == SELECT_FILE)
                 onSelectFromGalleryResult(data)
             else if (requestCode == REQUEST_CAMERA)
@@ -128,9 +133,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun onCaptureImageResult(data: Intent?) {
         val thumbnail = data?.extras?.get("data") as Bitmap
+        // CALL THIS METHOD TO GET THE URI FROM THE BITMAP
         val bytes = ByteArrayOutputStream()
-        thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes)
-
+        thumbnail.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+        val path = Images.Media.insertImage(applicationContext.getContentResolver(), thumbnail, "Title", null)
+        filePath = Uri.parse(path)
         /*val destination = File(Environment.getExternalStorageDirectory(),
                 System.currentTimeMillis().toString() + ".jpg")
 
@@ -145,7 +152,6 @@ class MainActivity : AppCompatActivity() {
         } catch (e: IOException) {
             e.printStackTrace()
         }*/
-
         imageSelected.setImageBitmap(thumbnail)
     }
 
